@@ -175,7 +175,7 @@ module Cloudflare
 			response.successful?
 		end
 		
-		def create(name)
+		def self.create(name)
 			response = post(
 				{name: name}.to_json,
 				content_type: 'application/json'
