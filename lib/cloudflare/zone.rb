@@ -174,14 +174,6 @@ module Cloudflare
 			)
 			response.successful?
 		end
-		
-		def self.create(name)
-			response = post(
-				{name: name}.to_json,
-				content_type: 'application/json'
-			)
-			response.successful?
-		end
 
 		def dns_records
 			@dns_records ||= DNSRecords.new(concat_urls(url, 'dns_records'), self, **options)
@@ -202,6 +194,14 @@ module Cloudflare
 	end
 
 	class Zones < Resource
+		def create(name)
+			response = post(
+				{name: name}.to_json,
+				content_type: 'application/json'
+			)
+			response.successful?
+		end
+		
 		def all(preload = false)
 			results = paginate(Zone, url)
 			results.map {|record| Zone.new(concat_urls(url, record[:id]), record, preload, **options)}
